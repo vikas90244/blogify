@@ -3,7 +3,9 @@ from blog import schemas
 from sqlalchemy.orm import Session
 from blog import database,models
 from blog.hashing import Hash
-from blog.token import create_access_token
+from blog.JWTtoken import create_access_token
+
+
 router = APIRouter(
     tags=['authentication']
 )
