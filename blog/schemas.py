@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import List
 
 class BlogBase(BaseModel):
@@ -14,6 +14,7 @@ class Blog(BlogBase):
 
 
 class User(BaseModel):
+    id:int
     name:str
     email:str
     password:str
@@ -49,3 +50,12 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: str | None = None
+
+class EmailSchema(BaseModel):
+    email: EmailStr
+
+class RegisterWithOTP(BaseModel):
+    name:str
+    email: EmailStr
+    password:str
+    otp: str
