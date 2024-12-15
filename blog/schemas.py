@@ -25,7 +25,7 @@ class CurrentUser(BaseModel):
 
 
 class ShowUser(BaseModel):
-    id
+    id:int
     name: str
     email: str
     blogs: List[Blog] = []
