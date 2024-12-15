@@ -21,7 +21,7 @@ def destroy(id, db:Session, user_id:int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"blog with id {id} not found")
     
-    if blog.user_id != user_id:
+    if blog.first().user_id != user_id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="You are not authorized to delete this blog"
@@ -33,9 +33,8 @@ def destroy(id, db:Session, user_id:int):
 
 
 def update(id, request:schemas.Blog, db:Session, user_id:int):
-
-    blog=db.query(models.Blog).filter(models.Blog.id==id )
-    if not blog.first():
+    blog = db.query(models.Blog).filter(models.Blog.id == id).first()
+    if not blog:
          raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"blog with id {id} not found")
     
@@ -44,9 +43,15 @@ def update(id, request:schemas.Blog, db:Session, user_id:int):
             status_code=status.HTTP_403_FORBIDDEN,
             detail="You are not authorized to update this blog"
         )
-    blog.update(request.dict())
+    
+    # Manually update attributes
+    blog.title = request.title
+    blog.body = request.body
+    blog.title_color = request.title_color or blog.title_color
+    
     db.commit()
-    return 'updated'
+    db.refresh(blog)
+    return blog
 
 
 def show(id, db:Session):
@@ -58,4 +63,3 @@ def show(id, db:Session):
     #    response.status_code =status.HTTP_404_NOT_FOUND
     #    return {'detail':status.HTTP_404_NOT_FOUND}                   
     return blog
-

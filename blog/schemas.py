@@ -2,9 +2,9 @@ from pydantic import BaseModel, EmailStr
 from typing import List
 
 class BlogBase(BaseModel):
-    title:str
-    body:str
-    title_color:str
+    title: str
+    body: str
+    title_color: str = "#e2efff"
 
 
 class Blog(BlogBase):
@@ -14,9 +14,9 @@ class Blog(BlogBase):
 
 
 class User(BaseModel):
-    name:str
-    email:str
-    password:str
+    name: str
+    email: str
+    password: str
 
 class CurrentUser(BaseModel):
     id: int
@@ -26,24 +26,24 @@ class CurrentUser(BaseModel):
 
 class ShowUser(BaseModel):
     id
-    name:str
-    email:str
-    blogs:List[Blog]=[]
+    name: str
+    email: str
+    blogs: List[Blog] = []
     class Config():
         from_attributes = True
 
 
 
 class ShowBlog(Blog):
-    id:int
+    id: int
     creator: ShowUser
     class Config():
         from_attributes = True
 
 
 class Login(BaseModel):
-    username:str
-    password:str
+    username: str
+    password: str
 
 
 
@@ -59,7 +59,7 @@ class EmailSchema(BaseModel):
     email: EmailStr
 
 class RegisterWithOTP(BaseModel):
-    name:str
+    name: str
     email: EmailStr
-    password:str
+    password: str
     otp: str
