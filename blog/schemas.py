@@ -18,6 +18,10 @@ class User(BaseModel):
     email:str
     password:str
 
+class CurrentUser(BaseModel):
+    id: int
+    name: str
+    email: str
 
 
 class ShowUser(BaseModel):
