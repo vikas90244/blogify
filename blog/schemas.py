@@ -14,7 +14,6 @@ class Blog(BlogBase):
 
 
 class User(BaseModel):
-    id:int
     name:str
     email:str
     password:str
@@ -22,6 +21,7 @@ class User(BaseModel):
 
 
 class ShowUser(BaseModel):
+    id
     name:str
     email:str
     blogs:List[Blog]=[]

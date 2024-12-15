@@ -40,7 +40,7 @@ def login(request:OAuth2PasswordRequestForm=Depends(), db:Session=Depends(get_db
 def send_otp_for_registration(request:schemas.EmailSchema, db:Session =Depends(get_db)):
 
     if db.query(models.User).filter(models.User.email==request.email).first():
-            raise HTTPException(status_code=400, detail="Email already registered")
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
     
     otp = str(random.randint(100000, 999999))
     expiry = datetime.now(timezone.utc) + timedelta(minutes=5)
